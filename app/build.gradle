@@ -19,21 +19,35 @@ android {
         applicationId "wscconnect.android"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 411
-        versionName '4.1.1'
+        versionCode 420
+        versionName '4.2.0'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         resConfigs "en", "de"
 		setProperty("archivesBaseName", "WSC-Reloaded_v" + versionName)
     }
+	signingConfigs {
+        Black {
+            def props = new Properties()
 
+            def fileInputStream = new FileInputStream(file('signing.properties'))
+            props.load(fileInputStream)
+            fileInputStream.close()
+
+            storeFile = file(props['storeFilePath'])
+            storePassword = props['storePassword']
+            keyAlias = props['keyAlias']
+            keyPassword = props['keyPassword']
+        }
+		}
     buildTypes {
 
         Black {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+			signingConfig signingConfigs.Black
         }
     }
 
