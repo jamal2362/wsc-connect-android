@@ -9,17 +9,10 @@ android {
         applicationId 'wscconnect.android'
         minSdkVersion 23
         targetSdkVersion 30
-
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables.useSupportLibrary = true
-        resConfigs "en", "de"
-        setProperty("archivesBaseName", "WSC-Reloaded_v" + versionName)
         versionCode 42
         versionName '4.2.0'
         resConfigs 'en', 'de'
         setProperty('archivesBaseName', 'WSC-Reloaded_v' + versionName)
-
     }
 
     signingConfigs {
