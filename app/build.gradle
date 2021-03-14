@@ -9,17 +9,39 @@ android {
         applicationId 'wscconnect.android'
         minSdkVersion 23
         targetSdkVersion 30
+
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+        resConfigs "en", "de"
+        setProperty("archivesBaseName", "WSC-Reloaded_v" + versionName)
         versionCode 42
         versionName '4.2.0'
         resConfigs 'en', 'de'
         setProperty('archivesBaseName', 'WSC-Reloaded_v' + versionName)
+
     }
 
+    signingConfigs {
+        Dark {
+            def props = new Properties()
+
+            def fileInputStream = new FileInputStream(file('signing.properties'))
+            props.load(fileInputStream)
+            fileInputStream.close()
+
+            storeFile = file(props['storeFilePath'])
+            storePassword = props['storePassword']
+            keyAlias = props['keyAlias']
+            keyPassword = props['keyPassword']
+        }
+		}
     buildTypes {
         Dark {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+			signingConfig signingConfigs.Dark
         }
     }
 
@@ -41,11 +63,11 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     // AndroidX Stuff //
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.0-beta01'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01'
 
     // Material //
-    implementation 'com.google.android.material:material:1.3.0'
+    implementation 'com.google.android.material:material:1.4.0-alpha01'
 
     // Google Stuff //
     implementation 'com.google.firebase:firebase-messaging:21.0.1'
@@ -62,5 +84,5 @@ dependencies {
     implementation 'com.auth0.android:jwtdecode:2.0.0'
 
     // OkHttp3 //
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2'
 }
